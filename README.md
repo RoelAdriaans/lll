@@ -18,3 +18,10 @@ To run the project locally, a docker-compose file has been created. This will bu
 the required projects and database dependencies.
 
 To run:
+```bash
+docker compose up
+```
+
+Access Eventstore via <http://localhost:2113/web/index.html#/dashboard/>
+Please note that the database does not use any authentication and authorization 
+(including ACLs) when running insecure.
