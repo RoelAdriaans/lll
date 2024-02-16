@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "trainlocationeventsource"
+version = "0.1.0"
+description = ""
+authors = ["Roel Adriaans <roel@adriaans.org>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pyzmq = "^25.1.2"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.0.0"
+black = "^24.2.0"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
