@@ -8,12 +8,14 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 pyzmq = "^25.1.2"
+attrs = "^23.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.0.0"
 black = "^24.2.0"
 isort = "^5.13.2"
+pytest = "^8.0.1"
 
 [build-system]
 requires = ["poetry-core"]

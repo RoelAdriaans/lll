@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns3:ArrayOfTreinLocation
+        xmlns:tns3="http://schemas.datacontract.org/2004/07/Cognos.Infrastructure.Models">
+    <tns3:TreinLocation>
+        <tns3:TreinNummer>8669</tns3:TreinNummer>
+        <tns:TreinMaterieelDelen
+                xmlns:tns="http://schemas.datacontract.org/2004/07/Cognos.Infrastructure.Models"
+                xmlns:tns1="http://www.ns.nl/QueryTreinLocatie_v1">
+            <tns:MaterieelDeelNummer>2010</tns:MaterieelDeelNummer>
+            <tns:Materieelvolgnummer>1</tns:Materieelvolgnummer>
+            <tns:GeneratieTijd/>
+            <tns:GpsDatumTijd>2024-02-11T15:40:45.001Z</tns:GpsDatumTijd>
+            <tns:Orientatie/>
+            <tns:BronId/>
+            <tns:Bron>GNSS1</tns:Bron>
+            <tns:Fix/>
+            <tns:Berichttype/>
+            <tns:Longitude>4.663915847274658</tns:Longitude>
+            <tns:Latitude>52.11787190753105</tns:Latitude>
+            <tns:Elevation>16.0</tns:Elevation>
+            <tns:Snelheid>92.83</tns:Snelheid>
+            <tns:Richting>5.46</tns:Richting>
+            <tns:Rijrichting/>
+            <tns:Hdop>1.48</tns:Hdop>
+            <tns:AantalSatelieten>4</tns:AantalSatelieten>
+        </tns:TreinMaterieelDelen>
+    </tns3:TreinLocation>
+</tns3:ArrayOfTreinLocation>
