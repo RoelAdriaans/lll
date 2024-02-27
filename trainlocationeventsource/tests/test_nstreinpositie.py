@@ -1,4 +1,4 @@
-from trainlocationeventsource.nstreinpositie import NStreinpositie, TreinMaterieelDeel
+from trainlocationeventsource.domain.nstreinpositie import NStreinpositie, TreinMaterieelDeel
 
 
 class TestNstreinpositie:
