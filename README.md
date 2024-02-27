@@ -23,5 +23,5 @@ docker compose up
 ```
 
 Access Eventstore via <http://localhost:2113/web/index.html#/dashboard/>
-Please note that the database does not use any authentication and authorization 
+Please note that the database does not use any authentication and authorization
 (including ACLs) when running insecure.

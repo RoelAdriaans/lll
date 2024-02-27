@@ -1,0 +1,38 @@
+# See README for installation instructions.
+exclude: ^template/
+
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 24.2.0
+    hooks:
+    - id: black
+      language_version: 'python3.12'
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+    - id: flake8
+      args: ["--ignore", "E203,W503,E701"]
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+    - id: isort
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: check-ast
+    - id: check-case-conflict
+    - id: check-merge-conflict
+    - id: debug-statements
+      language_version: python3
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.0
+    hooks:
+    - id: pyupgrade
+      args: [ "--py311-plus" ]

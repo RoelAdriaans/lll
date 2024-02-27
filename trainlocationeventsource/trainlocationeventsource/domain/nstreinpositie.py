@@ -19,15 +19,6 @@ class NStreinpositie:
     treinnummer: str
     trein_materieel_delen: list[TreinMaterieelDeel]
 
-    @staticmethod
-    def from_xml(arrayoftreinlocation: str) -> list[NStreinpositie]:
-        """Create a list of NStreinposities from a raw XML stream."""
-        # @TODO Refactor this. Now we have business logic and XML parsing in the same
-        #    class..
-        ...
-
-        return []
-
 
 @attrs.define(frozen=True)
 class TreinMaterieelDeel:
