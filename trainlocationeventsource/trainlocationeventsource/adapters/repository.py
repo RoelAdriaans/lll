@@ -1,6 +1,6 @@
 import abc
 
-from trainlocationeventsource.domain import NStreinpositie, TreinMaterieelDeel
+from trainlocationeventsource.domain import NStreinpositie
 
 
 class AbstractRepository(abc.ABC):
