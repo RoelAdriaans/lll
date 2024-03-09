@@ -10,6 +10,13 @@ This topic is then pushed to a EvenstoreDB.
 
 The goal of this daemon is to be as light and small as possible.
 
+# Structure
+
+The structure of this project is based on the book [architecture patterns in python](https://www.cosmicpython.com/).
+
+- There is currently no messagebus implemented within the project.
+  Currently, a messages comes in, and the entrypoints calls the unit of work.
+
 ## Docker
 
 Building the project:
