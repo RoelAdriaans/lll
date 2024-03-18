@@ -12,6 +12,8 @@ from gzip import GzipFile
 import xmltodict
 import zmq
 
+from trainlocationeventsource.service_layer import services, unit_of_work
+
 logger = logging.getLogger(__name__)
 
 
@@ -46,8 +48,8 @@ def message_handler(content: bytes):
     contents = GzipFile(fileobj=io.BytesIO(content)).read()
     parsed = xmltodict.parse(contents.decode())
     json_data = json.dumps(parsed, indent=4)
-    print(json_data)
-    # Call UOW here?
+    logger.info("Received json data: %s", json_data[:100])
+    services.handle_nstreinpositie(parsed, unit_of_work.EventstoreDBUnitOfWork())
 
 
 def main():

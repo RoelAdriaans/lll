@@ -4,20 +4,23 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from trainlocationeventsource.adapters.repository import AbstractRepository
 from trainlocationeventsource.domain import NStreinpositie, TreinMaterieelDeel
+from trainlocationeventsource.service_layer import unit_of_work
 
 
-def handle_nstreinpositie(nstreinpositie: dict, repository: AbstractRepository):
+def handle_nstreinpositie(nstreinpositie: dict, uow: unit_of_work.AbstractUnitOfWork):
     """Handle a nstreinpositie message. Message must be in a dict format, but still
     adhere to the NStreinpositiesInterface5 standard.
     Saves the new Treinpositie in the repository"""
     delen = _parse_treinmaterieeldelen(nstreinpositie)
     positie = _parse_nstreinpositie(nstreinpositie, trein_materieel_delen=delen)
-    repository.save(positie)
+    with uow:
+        uow.posities.save(positie)
 
 
 def _parse_treinmaterieeldelen(nstreinpositie: dict) -> list[TreinMaterieelDeel]:
+    print("Pos")
+    print(nstreinpositie)
     delen = nstreinpositie["tns3:ArrayOfTreinLocation"]["tns3:TreinLocation"][
         "tns:TreinMaterieelDelen"
     ]

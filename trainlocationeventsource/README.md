@@ -17,6 +17,9 @@ The structure of this project is based on the book [architecture patterns in pyt
 - There is currently no messagebus implemented within the project.
   Currently, a messages comes in, and the entrypoints calls the unit of work.
 
+Things that can be improved:
+
+- There are some @TODO's in the project, that can be picked up
 ## Docker
 
 Building the project:

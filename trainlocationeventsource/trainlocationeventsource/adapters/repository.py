@@ -1,6 +1,14 @@
+from __future__ import annotations
+
 import abc
+import json
+import logging
+
+from esdbclient import EventStoreDBClient, NewEvent, StreamState
 
 from trainlocationeventsource.domain import NStreinpositie
+
+logger = logging.getLogger(__name__)
 
 
 class AbstractRepository(abc.ABC):
@@ -23,10 +31,29 @@ class AbstractRepository(abc.ABC):
 class EventStoreDBRepository(AbstractRepository):
     """Store the domain to the EvenstoreDB"""
 
-    def __init__(self):
-        # @TODO Please implement me :)
-        raise NotImplementedError
+    def __init__(self, client: EventStoreDBClient):
+        self.client = client
+
+    @staticmethod
+    def compute_streamname(positie: NStreinpositie):
+        return f"NStreinpositie.{positie.treinnummer}"
 
     def save(self, positie: NStreinpositie):
-        # @TODO Please implement me :)
-        raise NotImplementedError
+        """Save new record to the EvenstoreDB."""
+        logger.info("Writing to EvenstoreDB for %s", positie.treinnummer)
+
+        event = NewEvent(
+            # id=uuid.uuid4(),
+            type="NStreinpositie",
+            data=json.dumps(positie).encode("utf8"),
+        )
+        commit_position = self.client.append_to_stream(
+            stream_name=self.compute_streamname(positie),
+            events=[event],
+            current_version=StreamState.ANY,
+        )
+        logger.info(
+            "Wrote to EvenstoreDB for %s, result: %s",
+            positie.treinnummer,
+            commit_position,
+        )

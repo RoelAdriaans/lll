@@ -73,4 +73,4 @@ WORKDIR /app
 
 COPY trainlocationeventsource/ trainlocationeventsource/
 
-ENTRYPOINT ["python", "trainlocationeventsource/entrypoints/ndovloket.py"]
+ENTRYPOINT ["python",  "trainlocationeventsource/entrypoints/ndovloket.py"]
