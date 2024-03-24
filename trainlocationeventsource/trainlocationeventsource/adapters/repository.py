@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import abc
+import datetime
 import json
 import logging
 
+import attrs
 from esdbclient import EventStoreDBClient, NewEvent, StreamState
 
 from trainlocationeventsource.domain import NStreinpositie
@@ -28,6 +30,12 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
 
+def serialize(inst, field, value):
+    if isinstance(value, datetime.datetime):
+        return value.isoformat()
+    return value
+
+
 class EventStoreDBRepository(AbstractRepository):
     """Store the domain to the EvenstoreDB"""
 
@@ -44,20 +52,16 @@ class EventStoreDBRepository(AbstractRepository):
 
     def _stream_record(self, positie: NStreinpositie):
         """Save new records to the EvenstoreDB."""
-        logger.info("Writing to EvenstoreDB for %s", positie.treinnummer)
-
+        # @TODO The repository here has knowledge about how to serialize data to json
+        #    should this functionality be here?
+        data = attrs.asdict(positie, value_serializer=serialize)
         event = NewEvent(
             # id=uuid.uuid4(),
             type="NStreinpositie",
-            data=json.dumps(positie).encode("utf8"),
+            data=json.dumps(data).encode("utf8"),
         )
-        commit_position = self.client.append_to_stream(
+        self.client.append_to_stream(
             stream_name=self.compute_streamname(positie),
             events=[event],
             current_version=StreamState.ANY,
-        )
-        logger.info(
-            "Wrote to EvenstoreDB for %s, result: %s",
-            positie.treinnummer,
-            commit_position,
         )

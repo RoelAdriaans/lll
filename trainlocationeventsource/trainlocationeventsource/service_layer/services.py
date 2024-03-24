@@ -29,7 +29,6 @@ def _parse_arrayoftreinlocation(treinlocation: dict) -> list[NStreinpositie]:
 
 
 def _parse_treinpositie(treinlocation: dict) -> NStreinpositie:
-    print(treinlocation)
     treinnummer = treinlocation["tns3:TreinNummer"]
     delen = treinlocation["tns:TreinMaterieelDelen"]
     if isinstance(delen, list):

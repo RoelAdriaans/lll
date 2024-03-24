@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import abc
+import datetime
+import logging
 
 from esdbclient import EventStoreDBClient
 
@@ -9,14 +11,20 @@ from trainlocationeventsource.adapters.repository import (
     EventStoreDBRepository,
 )
 
+logger = logging.getLogger(__name__)
+
 
 class AbstractUnitOfWork(abc.ABC):
     posities: AbstractRepository
+    start_time: datetime.datetime
 
     def __enter__(self) -> AbstractUnitOfWork:
+        self.start_time = datetime.datetime.now()
         return self
 
     def __exit__(self, *args):
+        end_time = datetime.datetime.now()
+        logger.info("Saving events took %s seconds", end_time - self.start_time)
         self.rollback()
 
     @abc.abstractmethod
