@@ -7,16 +7,18 @@ class FakeRepository(repository.AbstractRepository):
         self._positions = []
         self._index = 0
 
-    def save(self, positie: NStreinpositie):
-        self._positions.append(positie)
+    def save(self, posities: list[NStreinpositie]):
+        for positie in posities:
+            self._positions.append(positie)
+
+    def __len__(self) -> int:
+        return len(self._positions)
 
     def __iter__(self):
-        return self
+        yield from self._positions
 
-    def __next__(self):
-        while self._index < len(self._positions):
-            return self._positions[self._index]
-        raise StopIteration
+    def __getitem__(self, item):
+        return self._positions[item]
 
     def get(self, index: int) -> NStreinpositie:
         return self._positions[index]

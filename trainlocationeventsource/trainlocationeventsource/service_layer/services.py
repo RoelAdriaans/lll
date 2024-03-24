@@ -8,26 +8,37 @@ from trainlocationeventsource.domain import NStreinpositie, TreinMaterieelDeel
 from trainlocationeventsource.service_layer import unit_of_work
 
 
-def handle_nstreinpositie(nstreinpositie: dict, uow: unit_of_work.AbstractUnitOfWork):
+def handle_nstreinpositie(treinlocation: dict, uow: unit_of_work.AbstractUnitOfWork):
     """Handle a nstreinpositie message. Message must be in a dict format, but still
     adhere to the NStreinpositiesInterface5 standard.
     Saves the new Treinpositie in the repository"""
-    delen = _parse_treinmaterieeldelen(nstreinpositie)
-    positie = _parse_nstreinpositie(nstreinpositie, trein_materieel_delen=delen)
+    trainlocations = _parse_arrayoftreinlocation(treinlocation)
     with uow:
-        uow.posities.save(positie)
+        uow.posities.save(trainlocations)
+        uow.commit()
 
 
-def _parse_treinmaterieeldelen(nstreinpositie: dict) -> list[TreinMaterieelDeel]:
-    print("Pos")
-    print(nstreinpositie)
-    delen = nstreinpositie["tns3:ArrayOfTreinLocation"]["tns3:TreinLocation"][
-        "tns:TreinMaterieelDelen"
-    ]
-    if isinstance(delen, list):
-        return [_parse_treinmaterieeldeel(deel) for deel in delen]
+def _parse_arrayoftreinlocation(treinlocation: dict) -> list[NStreinpositie]:
+    if "tns3:TreinLocation" not in treinlocation["tns3:ArrayOfTreinLocation"].keys():
+        return []
+    locations = treinlocation["tns3:ArrayOfTreinLocation"]["tns3:TreinLocation"]
+    if isinstance(locations, list):
+        return [_parse_treinpositie(location) for location in locations]
     else:
-        return [_parse_treinmaterieeldeel(delen)]
+        return [_parse_treinpositie(locations)]
+
+
+def _parse_treinpositie(treinlocation: dict) -> NStreinpositie:
+    print(treinlocation)
+    treinnummer = treinlocation["tns3:TreinNummer"]
+    delen = treinlocation["tns:TreinMaterieelDelen"]
+    if isinstance(delen, list):
+        trein_materieel_delen = [_parse_treinmaterieeldeel(deel) for deel in delen]
+    else:
+        trein_materieel_delen = [_parse_treinmaterieeldeel(delen)]
+    return NStreinpositie(
+        treinnummer=treinnummer, trein_materieel_delen=trein_materieel_delen
+    )
 
 
 def _parse_treinmaterieeldeel(treinmaterieeldeel: dict) -> TreinMaterieelDeel:

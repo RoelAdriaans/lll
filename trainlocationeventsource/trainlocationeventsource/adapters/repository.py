@@ -15,7 +15,7 @@ class AbstractRepository(abc.ABC):
     """Repository that will be used to store and retrieve the Domain to the database"""
 
     @abc.abstractmethod
-    def save(self, positie: NStreinpositie):
+    def save(self, posities: list[NStreinpositie]):
         # As for naming, maybe `save`?
         # esdbclient calls it `append_to_stream`. But the question is, are we going to
         # use esdb? And, do we want to have the terminology of the database structure
@@ -38,8 +38,12 @@ class EventStoreDBRepository(AbstractRepository):
     def compute_streamname(positie: NStreinpositie):
         return f"NStreinpositie.{positie.treinnummer}"
 
-    def save(self, positie: NStreinpositie):
-        """Save new record to the EvenstoreDB."""
+    def save(self, posities: list[NStreinpositie]):
+        for positie in posities:
+            self._stream_record(positie)
+
+    def _stream_record(self, positie: NStreinpositie):
+        """Save new records to the EvenstoreDB."""
         logger.info("Writing to EvenstoreDB for %s", positie.treinnummer)
 
         event = NewEvent(
