@@ -3,7 +3,7 @@ exclude: ^template/
 
 repos:
   - repo: https://github.com/ambv/black
-    rev: 24.2.0
+    rev: 24.3.0
     hooks:
     - id: black
       language_version: 'python3.12'
