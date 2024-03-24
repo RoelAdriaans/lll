@@ -1,1 +1,1 @@
-DOCKER_BUILDKIT=1 docker build -t trainlocationeventsource --target=runtime .
+DOCKER_BUILDKIT=1 docker build -t lll/trainlocationeventsource --target=runtime .

@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import datetime
 
 from trainlocationeventsource.domain import NStreinpositie, TreinMaterieelDeel
 from trainlocationeventsource.service_layer import unit_of_work
+
+logger = logging.getLogger(__name__)
 
 
 def handle_nstreinpositie(treinlocation: dict, uow: unit_of_work.AbstractUnitOfWork):
@@ -13,6 +16,8 @@ def handle_nstreinpositie(treinlocation: dict, uow: unit_of_work.AbstractUnitOfW
     adhere to the NStreinpositiesInterface5 standard.
     Saves the new Treinpositie in the repository"""
     trainlocations = _parse_arrayoftreinlocation(treinlocation)
+    logger.info("Saving events %s records", len(trainlocations))
+
     with uow:
         uow.posities.save(trainlocations)
         uow.commit()

@@ -41,7 +41,7 @@ class EventstoreDBUnitOfWork(AbstractUnitOfWork):
 
     def __enter__(self):
         # @TODO Make the hostname configurable / Detect from env.vars
-        self.client = EventStoreDBClient(uri="esdb://localhost:2113?Tls=false")
+        self.client = EventStoreDBClient(uri="esdb://eventstore.db:2113?Tls=false")
         self.posities = EventStoreDBRepository(self.client)
         return super().__enter__()
 
