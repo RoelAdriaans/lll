@@ -19,7 +19,7 @@ the required projects and database dependencies.
 
 To run:
 ```bash
-docker compose up
+docker compose up --build
 ```
 
 Access Eventstore via <http://localhost:2113/web/index.html#/dashboard/>
